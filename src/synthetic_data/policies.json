@@ -1,0 +1,94 @@
+{
+  "bank_name": "BharatApex Bank & FinTech",
+  "version": "2026.5.0-RBI-COMPLIANT",
+  "headquarters": "MG Road, Bengaluru, Karnataka, India",
+  "ifsc_code": "APEX0004921",
+  "micr_code": "560002042",
+  "fx_rate_usd_to_inr": 94.11,
+  "regulatory_framework": "Reserve Bank of India (RBI) Master Directions, NPCI & FEMA 1999",
+  "deposit_insurance": "DICGC Insured up to ₹5,00,000 per depositor per bank (DICGC Act, 1961)",
+  "compliance_rules": [
+    "NEVER request, store, or log customer UPI PIN, ATM PIN, full 16-digit PAN/card number, CVV, or Aadhaar OTP (RBI Digital Payment Security Controls Directions, 2021).",
+    "RBI Zero-Liability Circular (DBR.No.Leg.BC.78/09.07.005/2017-18): Customer has ZERO liability when unauthorized electronic banking transactions occur due to bank/third-party breach or are reported within 3 working days.",
+    "RBI Limited Liability (4 to 7 Working Days): If an unauthorized transaction is reported between 4 and 7 working days, maximum customer liability is capped at ₹5,000 (BSBDA) or ₹10,000 to ₹25,000 (Savings/Current/Cards).",
+    "RBI Harmonisation of Turn Around Time (TAT) & Compensation (DPSS.CO.PD No.629/02.01.014/2019-20): Failed ATM cash withdrawals must be auto-reversed within T+5 calendar days, and failed UPI/IMPS P2P/P2M debits within T+1 day, failing which the bank automatically credits ₹100/day penalty to the customer.",
+    "FEMA 1999 & RBI Master Direction on Reporting under FEMA: Inward SWIFT remittances require a valid RBI Purpose Code (e.g., P0802 for Software Consultancy) before final credit to NRE/Resident accounts.",
+    "RBI e-Mandate / Standing Instruction Framework: Recurring card or UPI AutoPay debits above ₹15,000 (₹1,00,000 for Mutual Funds, Insurance & Credit Card bills) require Additional Factor of Authentication (AFA) and a 24-hour pre-debit notification.",
+    "Reserve Bank - Integrated Ombudsman Scheme (RB-IOS, 2021): Customers whose grievances remain unresolved for 30 days can escalate to cms.rbi.org.in or CRPC Toll-Free 14448 for awards up to ₹20 Lakh (consequential loss) plus ₹1 Lakh for mental anguish/harassment.",
+    "Courtesy fee waivers are restricted to 1 waiver per rolling 12 months for retail customers under POL-RBI-FEE-001; MSME repeat waivers require Regional Branch Manager approval."
+  ],
+  "policies": [
+    {
+      "topic": "Fee & AMC Reversals",
+      "policy_id": "POL-RBI-FEE-001",
+      "rbi_reference": "RBI Master Circular on Customer Service in Banks (DBR.No.Leg.BC.21/09.07.006)",
+      "rule": "Retail and Youth savings accounts are eligible for ONE courtesy fee/AMC reversal every 12 months if the account maintains clean standing. MSME commercial accounts require Regional Branch Manager sign-off if a courtesy waiver (e.g. NACH return fee) was already granted within the rolling 12-month period."
+    },
+    {
+      "topic": "Card Security, Tokenisation & Instant Lock",
+      "policy_id": "POL-RUPAY-SEC-002",
+      "rbi_reference": "RBI Master Direction on Credit and Debit Card – Issuance and Conduct Directions, 2022",
+      "rule": "RuPay, Visa, and Mastercard cards are issued with international and contactless Card-Not-Present (CNP) transactions disabled by default unless explicitly enabled by the customer. Cards can be frozen or unfrozen instantly 24x7 via conversational banking; freezing blocks new POS, ATM, and e-commerce authorizations while pre-authorized UPI AutoPay mandates remain active."
+    },
+    {
+      "topic": "Unauthorized Electronic Transactions & Zero Liability",
+      "policy_id": "POL-NPCI-DISP-003",
+      "rbi_reference": "RBI Circular DBR.No.Leg.BC.78/09.07.005/2017-18 (Customer Protection – Limiting Liability)",
+      "rule": "Customers reporting unauthorized electronic transactions within 3 working days enjoy Zero Liability. The bank must credit shadow/provisional reversal within 10 working days of notification (accelerated to 24 hours for Premier clients and 48 hours for retail accounts at BharatApex) and complete investigation within 90 days."
+    },
+    {
+      "topic": "FIRC & Cross-Border Inward Remittances",
+      "policy_id": "POL-FEMA-FIRC-004",
+      "rbi_reference": "FEMA 1999 & RBI Master Direction – Other Remittance Facilities (FED)",
+      "rule": "Inward SWIFT foreign currency wires exceeding $2,500 USD equivalent require electronic RBI Purpose Code verification (such as P0802 for Software & IT Consultancy or P0103 for Advance against Exports). Once verified, compliance holds are released within 15 minutes and an e-FIRC is issued."
+    },
+    {
+      "topic": "Failed UPI, IMPS & NACH Auto-Reversal & Penalty",
+      "policy_id": "POL-RBI-TAT-005",
+      "rbi_reference": "RBI Circular DPSS.CO.PD No.629/02.01.014/2019-20 (Harmonisation of TAT)",
+      "rule": "If a customer's account is debited but the beneficiary is not credited: (a) UPI P2P/P2M and IMPS must auto-reverse within T+1 calendar day; (b) NACH/APBS credits within T+1 day. Any delay beyond the stipulated TAT attracts an automatic compensation of ₹100 per day of delay credited to the customer without requiring a claim."
+    },
+    {
+      "topic": "Failed ATM Cash Withdrawal Reversal (T+5 Rule)",
+      "policy_id": "POL-RBI-ATM-006",
+      "rbi_reference": "RBI Circular DPSS.CO.PD No.629/02.01.014/2019-20 (Section 1 - ATM Transactions)",
+      "rule": "For failed on-us or off-us ATM transactions where cash is not dispensed but the account is debited, the bank must pro-actively reverse the debit within a maximum of T+5 calendar days. Failure to credit within T+5 days mandates an automatic ₹100 per day compensation to the account holder."
+    },
+    {
+      "topic": "Merchant QR & Soundbox Batch Settlements",
+      "policy_id": "POL-MERCH-SETTLE-007",
+      "rbi_reference": "NPCI BharatQR & UPI Merchant Settlement Guidelines",
+      "rule": "Weekend QR Soundbox and POS collections (Saturday & Sunday) are aggregated under NPCI T+1 clearing cycles and settled automatically into the merchant's linked Current Account on Monday morning at 06:00 IST."
+    },
+    {
+      "topic": "Recurring e-Mandates & UPI AutoPay",
+      "policy_id": "POL-RBI-EMAND-008",
+      "rbi_reference": "RBI Circular CO.DPSS.POLC.No.S-518/02-14-003/2023-24",
+      "rule": "All recurring e-mandates require a pre-debit notification at least 24 hours prior to actual charge execution, with an instant opt-out/pause link. Execution without AFA is permitted up to ₹15,000 for general subscriptions and up to ₹1,00,000 for Mutual Fund SIPs, Insurance premiums, and Credit Card bill repayments."
+    },
+    {
+      "topic": "Fixed Deposit, NRE & Savings Interest Rates",
+      "policy_id": "POL-RATES-FD-009",
+      "rbi_reference": "RBI Master Direction - Reserve Bank of India (Interest Rate on Deposits) Directions",
+      "rule": "Savings interest is 4.00% p.a. calculated on daily end-of-day balance and credited quarterly. Domestic & NRE Fixed Deposit rates range from 6.85% p.a. (1 year) to 7.65% p.a. (3-year Section 80C Tax-Saver), with an additional +0.50% p.a. Senior Citizen privilege on domestic term deposits."
+    },
+    {
+      "topic": "KYC, CKYC & Periodic Updation (Re-KYC)",
+      "policy_id": "POL-RBI-KYC-010",
+      "rbi_reference": "RBI Master Direction – Know Your Customer (KYC) Direction, 2016 (Updated 2026)",
+      "rule": "Periodic KYC updation is required every 2 years for High-Risk, 8 years for Medium-Risk, and 10 years for Low-Risk customers. Where there is no change in KYC information, a self-declaration via registered email, mobile, ATMs, or NetBanking suffices without requiring a physical branch visit."
+    },
+    {
+      "topic": "Inoperative Accounts & Unclaimed Deposits (UDGAM)",
+      "policy_id": "POL-RBI-INOP-011",
+      "rbi_reference": "RBI Circular DOR.SOG(LEG).REC/64/09.08.024/2023-24",
+      "rule": "A savings or current account is classified as Inoperative only if there are no customer-induced debit or credit transactions for over 24 months (system-generated interest credits or maintenance charges do not count). Zero penal charges are levied for non-maintenance of minimum balance in inoperative accounts, and reactivation via Video-CIP/biometrics is free of cost."
+    },
+    {
+      "topic": "RBI Integrated Ombudsman Escalation & Nodal Officer",
+      "policy_id": "POL-RBI-IOS-012",
+      "rbi_reference": "Reserve Bank - Integrated Ombudsman Scheme (RB-IOS), 2021",
+      "rule": "If a complaint is not resolved by the bank within 30 calendar days or the customer is dissatisfied with the Principal Nodal Officer's resolution, the customer can file an appeal on the RBI CMS portal (https://cms.rbi.org.in) or call 14448."
+    }
+  ]
+}

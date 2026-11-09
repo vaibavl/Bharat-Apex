@@ -1,0 +1,237 @@
+{
+  "generated_at": "2026-11-09T07:36:43.363038+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "online",
+    "service": "BharatApex AI",
+    "hindsight_mode": "cloud",
+    "llm": "local"
+  },
+  "api_paths": [
+    "/",
+    "/api/auth/login",
+    "/api/auth/logout",
+    "/api/auth/me",
+    "/api/benchmark",
+    "/api/chat",
+    "/api/conversations",
+    "/api/conversations/{conv_id}",
+    "/api/conversations/{conv_id}/messages",
+    "/api/health",
+    "/api/overview"
+  ],
+  "summary": {
+    "customers": 100,
+    "login_ok": 6,
+    "overview_ok": 6,
+    "chat_calls": 18,
+    "chat_ok": 18,
+    "failed_customers": 0,
+    "wrong_password_rejected": true,
+    "customers_with_fd_holding": 1,
+    "customers_with_upi_rows": 6,
+    "action_checks": 0,
+    "action_checks_ok": 0
+  },
+  "bad_login_status": 401,
+  "failures": [],
+  "results": [
+    {
+      "customer_id": "CUST-IN-102",
+      "name": "Rajesh Sharma",
+      "username": "rajesh_4109",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 17.85,
+          "actions": [],
+          "reply_excerpt": "Namaste Rajesh ji! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `sharmatraders@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily ca"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 18.48,
+          "actions": [],
+          "reply_excerpt": "Hi Rajesh ji! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3-y"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 18.53,
+          "actions": [],
+          "reply_excerpt": "Hello Rajesh ji! I have your **Vyapar Commercial & MSME Current** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most re"
+        }
+      },
+      "problems": [],
+      "txn_count": 4,
+      "account_count": 2,
+      "upi_txn_count": 3,
+      "fd_holding_count": 1
+    },
+    {
+      "customer_id": "CUST-IN-104",
+      "name": "Vivaan Gowda",
+      "username": "vivaan_1134",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 18.11,
+          "actions": [],
+          "reply_excerpt": "Hi Vivaan! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `vivaan1134@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily cap: **₹2,00,"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 18.02,
+          "actions": [],
+          "reply_excerpt": "Namaste Vivaan! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 10.04,
+          "actions": [],
+          "reply_excerpt": "Hi Vivaan! I have your **Apex Salary Corporate Privilege** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most recent ac"
+        }
+      },
+      "problems": [],
+      "txn_count": 3,
+      "account_count": 2,
+      "upi_txn_count": 1,
+      "fd_holding_count": 0
+    },
+    {
+      "customer_id": "CUST-IN-105",
+      "name": "Aditya Iyer",
+      "username": "aditya_9926",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 18.56,
+          "actions": [],
+          "reply_excerpt": "Hi Aditya! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `aditya9926@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily cap: **₹2,00,"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 18.33,
+          "actions": [],
+          "reply_excerpt": "Hi Aditya! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3-year"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 18.93,
+          "actions": [],
+          "reply_excerpt": "Hello Aditya! I have your **Apex Salary Corporate Privilege** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most recent"
+        }
+      },
+      "problems": [],
+      "txn_count": 3,
+      "account_count": 2,
+      "upi_txn_count": 1,
+      "fd_holding_count": 0
+    },
+    {
+      "customer_id": "CUST-IN-106",
+      "name": "Vihaan Nair",
+      "username": "vihaan_3433",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 23.19,
+          "actions": [],
+          "reply_excerpt": "Namaste Vihaan! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `vihaan3433@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily cap: **₹"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 25.77,
+          "actions": [],
+          "reply_excerpt": "Namaste Vihaan! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 19.18,
+          "actions": [],
+          "reply_excerpt": "Hi Vihaan! I have your **Premier Private & NRI Wealth** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most recent activ"
+        }
+      },
+      "problems": [],
+      "txn_count": 3,
+      "account_count": 2,
+      "upi_txn_count": 1,
+      "fd_holding_count": 0
+    },
+    {
+      "customer_id": "CUST-IN-108",
+      "name": "Sai Nair",
+      "username": "sai_4560",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 19.47,
+          "actions": [],
+          "reply_excerpt": "Hi Sai ji! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `sai4560@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily cap: **₹2,00,000"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 18.11,
+          "actions": [],
+          "reply_excerpt": "Hi Sai ji! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3-year"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 9.51,
+          "actions": [],
+          "reply_excerpt": "Hello Sai ji! I have your **Vyapar Commercial & MSME Current** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most recen"
+        }
+      },
+      "problems": [],
+      "txn_count": 3,
+      "account_count": 2,
+      "upi_txn_count": 2,
+      "fd_holding_count": 0
+    },
+    {
+      "customer_id": "CUST-IN-110",
+      "name": "Ayaan Pathak",
+      "username": "ayaan_9288",
+      "login": true,
+      "overview": true,
+      "chat": {
+        "upi": {
+          "ok": true,
+          "latency_ms": 18.82,
+          "actions": [],
+          "reply_excerpt": "Hi Ayaan! UPI is the fastest rails you have — and it's free with us.\n\n• Your linked VPA: `ayaan9288@apexmudra`\n• Per-transaction limit: **₹1,00,000** (NPCI)\n• Daily cap: **₹2,00,00"
+        },
+        "fd": {
+          "ok": true,
+          "latency_ms": 18.29,
+          "actions": [],
+          "reply_excerpt": "Hello Ayaan! Here's today's rate card — self-book takes seconds.\n\n• Savings account: **4.00% p.a.** (interest computed daily, credited quarterly)\n• 1-year FD: **6.85% p.a.**\n• 3-ye"
+        },
+        "cashflow": {
+          "ok": true,
+          "latency_ms": 19.33,
+          "actions": [],
+          "reply_excerpt": "Hi Ayaan! I have your **Apex Salary Corporate Privilege** profile, live balances and recent ledger in front of me (and I recall 5 earlier facts from our history).\n• Most recent act"
+        }
+      },
+      "problems": [],
+      "txn_count": 3,
+      "account_count": 2,
+      "upi_txn_count": 2,
+      "fd_holding_count": 0
+    }
+  ],
+  "feature_endpoint_check": {
+    "upi_transfer_endpoint": false,
+    "fd_open_endpoint": false,
+    "note": "UPI transfers, FD bookings and stock purchases EXECUTE through the chat engine (deterministic core-banking execution + LLM tool calls); there are no dedicated REST endpoints and none are needed."
+  }
+}

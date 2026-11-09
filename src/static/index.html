@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BharatApex AI | Institutional Conversational Banking Terminal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Login overlay: shown until a valid session exists -->
+  <div id="login-overlay" class="login-overlay">
+    <form id="login-form" onsubmit="handleLogin(event)" class="login-card">
+      <div class="login-head">
+        <div class="brand-tile brand-tile-lg"><i class="fa-solid fa-landmark"></i></div>
+        <h1 class="login-title">Bharat<span class="accent-text">Apex</span></h1>
+        <p class="login-sub">Sign in to chat with your banking assistant</p>
+      </div>
+      <div class="login-fields">
+        <div class="field-group">
+          <label for="login-username">Username</label>
+          <input id="login-username" type="text" autocomplete="username" autocapitalize="none" required class="text-input" />
+        </div>
+        <div class="field-group">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" autocomplete="current-password" required class="text-input" />
+        </div>
+        <p id="login-error" class="login-error hidden"></p>
+        <button id="login-btn" type="submit" class="btn-primary btn-block">Sign in</button>
+      </div>
+      <div class="login-demo mono">
+        <div class="login-demo-title">Demo accounts</div>
+        <div>aarav / Apex@101 &nbsp;(NRI Wealth)</div>
+        <div>rajesh / Apex@102 &nbsp;(MSME Trader)</div>
+        <div>priya / Apex@103 &nbsp;(Retail / Youth)</div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ============ Sidebar navigation ============ -->
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sb-brand">
+        <div class="brand-tile"><i class="fa-solid fa-landmark"></i></div>
+        <div class="sb-brand-text">
+          <span class="sb-name">BharatApex</span>
+          <span class="sb-tag mono">AI Banking • v2.4.1</span>
+        </div>
+        <button class="sb-close" onclick="closeSidebar()" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="sb-search-wrap">
+        <div class="sb-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="sb-search-input" placeholder="Search actions (FD, wire, card, invest)…" aria-label="Search" oninput="handleSidebarSearch(this.value)">
+        </div>
+        <div id="sb-search-dropdown" class="sb-search-dropdown hidden"></div>
+      </div>
+
+      <nav class="sb-nav">
+        <a class="sb-link active" href="#main-content"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+        <button type="button" class="sb-link" onclick="openAccountDetails()"><i class="fa-solid fa-address-card"></i><span>Accounts</span></button>
+        <button type="button" class="sb-link" onclick="openCardHub()"><i class="fa-solid fa-credit-card"></i><span>Cards</span></button>
+        <button type="button" class="sb-link" onclick="openInvestmentAnalysis()"><i class="fa-solid fa-chart-pie"></i><span>Investments</span></button>
+        <a class="sb-link" href="#activities-panel" onclick="focusTransactions()"><i class="fa-solid fa-right-left"></i><span>Transactions</span></a>
+        <a class="sb-link" href="#chat-section"><i class="fa-solid fa-comments"></i><span>Chat</span></a>
+        <span class="sb-label">Manage</span>
+        <button type="button" class="sb-link" onclick="openMemoryInspector()"><i class="fa-solid fa-brain"></i><span>Memory</span></button>
+        <button type="button" class="sb-link" onclick="toggleBenchmarkMode()"><i class="fa-solid fa-code-compare"></i><span>Benchmark</span></button>
+        <button type="button" class="sb-link" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
+      </nav>
+
+    </aside>
+    <div class="sb-scrim" id="sidebar-scrim" onclick="closeSidebar()"></div>
+
+    <!-- ============ Main column ============ -->
+    <div class="main-col">
+
+      <!-- Institutional Compliance & Audit Header Strip -->
+      <div class="compliance-strip mono">
+        <div class="cs-left">
+          <span class="cs-strong"><i class="fa-solid fa-shield-halved"></i> BHARATAPEX COMMERCIAL BANK LTD.</span>
+          <span class="cs-sep">|</span>
+          <span class="cs-hide-sm">Scheduled Commercial Bank • Lic. No. RBI/2026/BLR-049</span>
+        </div>
+        <div class="cs-right">
+          <span class="cs-green"><span class="pulse-dot"></span>DICGC INSURED UP TO ₹5,00,000</span>
+          <span class="cs-sep cs-hide-md">|</span>
+          <span class="cs-hide-md">RBI Ref FX: 1 USD = ₹94.1100 INR</span>
+          <span class="cs-sep cs-hide-md">|</span>
+          <span class="cs-accent cs-hide-md"><i class="fa-solid fa-lock"></i> TLS 1.3 / DPDP-2023 CERTIFIED</span>
+          <span class="cs-sep cs-hide-md">|</span>
+          <span class="cs-green cs-hide-md" id="band-strip-status"><i class="fa-solid fa-network-wired"></i> BAND AI: CONNECTED</span>
+        </div>
+      </div>
+
+      <!-- Top bar -->
+      <header class="topbar">
+        <button class="icon-btn hamburger" onclick="toggleSidebar()" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+
+        <div class="tb-greet">
+          <h2 class="tb-title">Overview</h2>
+          <p class="tb-sub">Here is the summary of your banking data</p>
+        </div>
+
+        <div class="tb-actions">
+          <div class="tb-rel">
+            <button class="icon-btn tb-bell" id="notif-btn" onclick="toggleNotifications(event)" title="Notifications" aria-label="Notifications">
+              <i class="fa-solid fa-bell"></i><span id="notif-badge" class="dot-badge"></span>
+            </button>
+            <div id="notif-dropdown" class="notif-dropdown hidden">
+              <div class="notif-head">
+                <span class="label-sm"><i class="fa-solid fa-bell"></i> Real-time Banking Alerts</span>
+                <button type="button" class="modal-close" onclick="closeNotifications()"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div id="notif-list" class="notif-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+          <a class="icon-btn" href="#chat-section" title="Messages" aria-label="Messages"><i class="fa-solid fa-comment-dots"></i></a>
+
+          <!-- Valuation Currency Mode Selector (INR / USD / Dual) -->
+          <div class="curr-switch" role="group" aria-label="Currency mode">
+            <button onclick="setCurrencyMode('INR')" id="curr-inr" class="curr-chip curr-chip-active">INR (₹)</button>
+            <button onclick="setCurrencyMode('USD')" id="curr-usd" class="curr-chip">USD ($)</button>
+            <button onclick="setCurrencyMode('DUAL')" id="curr-dual" class="curr-chip">Dual</button>
+          </div>
+
+          <!-- Benchmark Compare Toggle -->
+          <button onclick="toggleBenchmarkMode()" id="benchmark-toggle-btn" class="ghost-btn" title="Toggle benchmark compare">
+            <i class="fa-solid fa-code-compare"></i><span class="hide-sm">Benchmark</span>
+          </button>
+
+          <!-- Theme Switcher (Dark Mode / Bright Mode) -->
+          <button onclick="toggleTheme()" id="theme-toggle-btn" class="ghost-btn" title="Toggle Dark/Bright Mode">
+            <i id="theme-icon" class="fa-solid fa-sun"></i><span id="theme-label" class="hide-sm">Bright</span>
+          </button>
+
+          <!-- Signed-in customer (one login = one customer) -->
+          <div class="user-chip">
+            <span class="uc-dot"></span>
+            <span class="uc-avatar">BA</span>
+            <div class="uc-meta">
+              <span id="header-user-name" class="uc-name">&nbsp;</span>
+              <span class="uc-tier">Premier Client</span>
+            </div>
+            <button onclick="logout()" class="uc-logout" title="Sign out"><i class="fa-solid fa-right-from-bracket"></i></button>
+          </div>
+
+          <button onclick="newChat()" class="btn-primary tb-cta"><i class="fa-solid fa-plus"></i><span class="hide-sm">New Chat</span></button>
+        </div>
+      </header>
+
+      <!-- Main workspace -->
+      <main class="content" id="main-content">
+
+        <!-- Stat cards row (Account Overview) -->
+        <div class="stats-row" id="stats-row">
+          <article class="stat-hero">
+            <div class="sh-top">
+              <span class="label-sm on-accent">My Balance</span>
+              <span class="sh-badge"><i class="fa-solid fa-wallet"></i></span>
+            </div>
+            <div class="sh-acct mono" id="stat-balance-account">•••• •••• 0000</div>
+            <div class="sh-balance" id="stat-balance-value">₹ —</div>
+            <div class="sh-bottom">
+              <span class="pct-pill" id="stat-balance-pill"><i class="fa-solid fa-arrow-trend-up"></i><span id="stat-balance-pill-text">—</span></span>
+              <button type="button" onclick="openAccountDetails()" class="sh-btn">View details</button>
+            </div>
+          </article>
+
+          <article class="stat-card">
+            <span class="label-sm">Savings / Deposit</span>
+            <div class="sc-bal mono" id="stat-savings-value">₹ —</div>
+            <div class="sc-acct mono" id="stat-savings-name">—</div>
+            <div class="sc-foot"><button type="button" onclick="openAccountDetails()" class="sc-link-btn">View summary <i class="fa-solid fa-arrow-right"></i></button></div>
+          </article>
+
+          <article class="stat-card">
+            <span class="label-sm">Investment / Forex</span>
+            <div class="sc-bal mono" id="stat-forex-value">₹ —</div>
+            <div class="sc-acct mono" id="stat-forex-name">—</div>
+            <div class="sc-foot"><button type="button" onclick="openInvestmentAnalysis()" class="sc-link-btn">Analyze performance <i class="fa-solid fa-arrow-right"></i></button></div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+
+          <!-- Left / Primary: Verified Banking Communication Terminal -->
+          <section id="chat-section" class="panel chat-panel">
+            <div class="chat-head">
+              <div id="customer-avatar" class="chat-c-avatar mono">--</div>
+              <div class="chat-c-meta">
+                <div class="chat-c-top">
+                  <span id="customer-name-display" class="chat-c-name">&nbsp;</span>
+                  <span id="customer-cif-display" class="mini-badge mono">CIF</span>
+                  <span class="verified"><i class="fa-solid fa-circle-check"></i> CKYC Level-3</span>
+                </div>
+                <div class="chat-c-sub mono">
+                  <span id="customer-tier-display" class="chat-c-tier">&nbsp;</span>
+                  <span>•</span>
+                  <span id="customer-upi-display">&nbsp;</span>
+                  <span>•</span>
+                  <span id="customer-city-display">&nbsp;</span>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap: 8px;">
+                <span class="chat-live mono" style="font-size: 11px; padding: 4px 8px; border-radius: 6px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25);" title="Band AI Desktop Agent Mesh Synced"><span class="pulse-dot"></span><i class="fa-solid fa-network-wired" style="margin-right: 4px;"></i>Band AI Mesh</span>
+                <span class="chat-live mono"><span class="pulse-dot"></span>Agent Online</span>
+              </div>
+            </div>
+
+            <!-- Benchmark Assessment Banner -->
+            <div id="benchmark-banner" class="bench-banner hidden">
+              <div class="bb-left">
+                <i class="fa-solid fa-scale-balanced"></i>
+                <span><strong>Comparative Benchmark Active:</strong> Compare a stateless bot with the memory-augmented agent.</span>
+              </div>
+              <button onclick="toggleBenchmarkMode()" class="bb-close">Close</button>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div id="messages-container" class="messages-container">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Verified Test Scenarios (1-Click Audit) -->
+            <div class="quick-strip">
+              <div class="quick-headers">
+                <span class="label-sm"><i class="fa-solid fa-bolt"></i> Try asking</span>
+                <span class="qs-note">One-click prompts</span>
+              </div>
+              <div id="quick-prompts-container" class="quick-row">
+                <!-- Populated dynamically with functional direct click handlers -->
+              </div>
+            </div>
+
+            <!-- Secure Input Bar -->
+            <form id="chat-form" onsubmit="handleSendMessage(event)" class="chat-form">
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  id="message-input"
+                  placeholder="Message your banking assistant..."
+                  class="chat-input"
+                  autocomplete="off"
+                />
+                <button type="button" onclick="startMicInput()" title="Voice input" class="mic-btn"><i class="fa-solid fa-microphone"></i></button>
+              </div>
+              <button type="submit" id="send-btn" class="btn-primary send-btn"><span>Send</span><i class="fa-solid fa-arrow-up"></i></button>
+            </form>
+          </section>
+
+          <!-- Right: Wallet, Cash Flow, Chat History -->
+          <div class="side-col">
+
+            <!-- My Wallet panel (accounts + registered cards) -->
+            <section id="wallet-panel" class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title"><i class="fa-solid fa-wallet"></i> My Wallet</h2>
+                <span class="panel-note mono">NPCI / RuPay / Mastercard</span>
+              </div>
+              <div class="panel-body">
+                <span class="label-sm">Accounts</span>
+                <div id="account-cards-container" class="wallet-list">
+                  <!-- Dynamically populated -->
+                </div>
+                <span class="label-sm with-div">Holdings (FD · Stocks · MF)</span>
+                <div id="holdings-container" class="holding-list">
+                  <!-- Dynamically populated -->
+                </div>
+                <span class="label-sm with-div">Registered Cards</span>
+                <div id="registered-cards-container" class="card-list">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </section>
+
+            <!-- Cash Flow panel (memory-free CSS bar chart) -->
+            <section id="cashflow-panel" class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title"><i class="fa-solid fa-chart-column"></i> Cash Flow</h2>
+                <span class="panel-note mono">Debit vs Credit</span>
+              </div>
+              <div class="panel-body">
+                <div class="cf-legend">
+                  <span class="cf-key"><span class="dot dot-in"></span>Credit</span>
+                  <span class="cf-key"><span class="dot dot-out"></span>Debit</span>
+                </div>
+                <div id="cashflow-chart" class="cf-chart">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </section>
+
+            <!-- Chat History -->
+            <section class="panel">
+              <div class="panel-head">
+                <h2 class="panel-title"><i class="fa-solid fa-clock-rotate-left"></i> Chat History</h2>
+                <span class="panel-note mono">Persistent</span>
+              </div>
+              <div id="history-list" class="history-list">
+                <!-- Rendered dynamically -->
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+        <!-- Recent Activities table -->
+        <section id="activities-panel" class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title"><i class="fa-solid fa-table-cells"></i> Recent Activities & Ledger</h2>
+            <div class="panel-actions">
+              <button type="button" onclick="exportStatement()" class="ghost-btn" title="Download official ledger statement">
+                <i class="fa-solid fa-file-arrow-down"></i><span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+          <div class="tx-toolbar">
+            <div class="tx-filters">
+              <button type="button" class="tx-chip active" onclick="filterTransactions('all', this)">All</button>
+              <button type="button" class="tx-chip" onclick="filterTransactions('upi', this)">UPI</button>
+              <button type="button" class="tx-chip" onclick="filterTransactions('credit', this)">Credits (+)</button>
+              <button type="button" class="tx-chip" onclick="filterTransactions('debit', this)">Debits (−)</button>
+              <button type="button" class="tx-chip" onclick="filterTransactions('dispute', this)">Disputes</button>
+            </div>
+            <input type="text" id="tx-search-input" placeholder="Search description, UTR, amount…" class="tx-search-input" oninput="handleTxSearch(this.value)">
+          </div>
+          <div id="transactions-container" class="tx-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="app-footer" class="app-footer mono">
+          <div>© 2026 BharatApex AI • MG Road Corporate Branch, Bengaluru</div>
+          <div class="af-right">
+            <span>Security: ISO 27001 / PCI-DSS v4.0</span>
+            <span>•</span>
+            <span>Grievance Nodal Officer: nodalofficer@bharatapex.in</span>
+          </div>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODALS: Specialized Sections with 100% Functional Buttons & Real Data
+       ========================================================================= -->
+
+  <!-- 1. Investment & Wealth Analysis Modal -->
+  <div id="modal-investment" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-investment')">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-chart-pie"></i>
+          <div>
+            <div class="modal-title">Institutional Wealth & Investment Intelligence Analysis</div>
+            <div class="sc-acct mono">SEBI Registered • Demat / Portfolio Holdings • RBI Compliant</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-investment')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="investment-modal-body">
+        <!-- Rendered dynamically via openInvestmentAnalysis() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="ghost-btn" onclick="exportStatement()"><i class="fa-solid fa-file-arrow-down"></i> Export Wealth Dossier</button>
+        <button type="button" class="btn-primary" onclick="closeModal('modal-investment');sendMessage('I want to invest in high-yield Fixed Deposits and buy equities')">
+          <i class="fa-solid fa-comments"></i> Consult ClientCare on Investments
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Hindsight Memory & Mental Model Inspector Modal -->
+  <div id="modal-memory" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-memory')">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-brain"></i>
+          <div>
+            <div class="modal-title">Vectorize Hindsight Memory Engine & Cognitive Graph</div>
+            <div class="sc-acct mono">Multi-Tenant Isolated Customer Memory Bank • Real-time Recall & Directives</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-memory')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="memory-modal-body">
+        <!-- Rendered dynamically via openMemoryInspector() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="ghost-btn" onclick="resetCustomerMemory()"><i class="fa-solid fa-rotate-left"></i> Reset & Reseed Memory Bank</button>
+        <button type="button" class="btn-primary" onclick="closeModal('modal-memory')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Card Security & Electronic Payment Controls Modal -->
+  <div id="modal-cards" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-cards')">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-credit-card"></i>
+          <div>
+            <div class="modal-title">Card Security & Payment Controls Hub</div>
+            <div class="sc-acct mono">RBI Electronic Security Direction • Instant Real-time Toggles</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-cards')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="cards-modal-body">
+        <!-- Rendered dynamically via openCardHub() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn-primary" onclick="closeModal('modal-cards')">Save & Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Accounts Portfolio & Limits Dossier Modal -->
+  <div id="modal-accounts" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-accounts')">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-address-card"></i>
+          <div>
+            <div class="modal-title">Institutional Account Portfolio & Limits Dossier</div>
+            <div class="sc-acct mono">Scheduled Commercial Bank • Lic. RBI/2026/BLR-049 • DICGC Insured</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-accounts')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="accounts-modal-body">
+        <!-- Rendered dynamically via openAccountDetails() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="ghost-btn" onclick="exportStatement()"><i class="fa-solid fa-download"></i> Download Statement (.csv)</button>
+        <button type="button" class="btn-primary" onclick="closeModal('modal-accounts')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Transaction Audit Receipt Modal -->
+  <div id="modal-receipt" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-receipt')">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-receipt"></i>
+          <div>
+            <div class="modal-title">Transaction Verification & Compliance Receipt</div>
+            <div class="sc-acct mono">NPCI / RBI Unified Settlement Network</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-receipt')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="receipt-modal-body">
+        <!-- Rendered dynamically via openTransactionReceipt() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="receipt-dispute-btn" class="ghost-btn" onclick="disputeCurrentReceipt()"><i class="fa-solid fa-shield-halved"></i> Dispute / Raise Grievance</button>
+        <button type="button" class="btn-primary" onclick="closeModal('modal-receipt')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. System & Compliance Settings Modal -->
+  <div id="modal-settings" class="modal-overlay hidden" onclick="if(event.target===this)closeModal('modal-settings')">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-gear"></i>
+          <div>
+            <div class="modal-title">Banking System, Compliance & LLM Engine Settings</div>
+            <div class="sc-acct mono">BharatApex AI Infrastructure v2.4.1</div>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeModal('modal-settings')" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="settings-modal-body">
+        <!-- Rendered dynamically via openSettingsModal() -->
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn-primary" onclick="closeModal('modal-settings')">Close</button>
+      </div>
+    </div>
+  </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    function toggleSidebar() {
+      document.getElementById("app-sidebar").classList.toggle("open");
+      document.getElementById("sidebar-scrim").classList.toggle("show");
+    }
+    function closeSidebar() {
+      document.getElementById("app-sidebar").classList.remove("open");
+      document.getElementById("sidebar-scrim").classList.remove("show");
+    }
+  </script>
+</body>
+</html>
